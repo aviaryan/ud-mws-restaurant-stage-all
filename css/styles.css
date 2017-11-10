@@ -332,3 +332,43 @@ nav h1 a {
     padding-bottom: 12px;
   }
 }
+
+/* === DET PAGE === */
+
+@media all and (max-width: 800px) {
+  #maincontent {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .inside #map-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+    top: 130px;
+  }
+
+  .inside #breadcrumb {
+    width: 100%;
+  }
+
+  #restaurant-container, #reviews-container {
+    width: calc(100% - 80px);
+  }
+
+  .inside #footer {
+    width: calc(100% - 50px);  /* dunno why 50 */
+  }
+
+  #restaurant-img {
+    width: 100%;
+  }
+
+  #restaurant-cuisine {
+    width: 100%;
+  }
+
+  #reviews-list li {
+    width: 95%;
+  }
+}
