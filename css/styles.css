@@ -304,3 +304,31 @@ nav h1 a {
 #restaurant-hours td {
   color: #666;
 }
+
+/* ====== MEDIA QUERIES ====== */
+
+/* === HOME PAGE === */
+
+@media all and (max-width: 1300px) {
+  #restaurants-list li {
+    width: calc(49% - 60px - 4%);  /* subtract for card padding and margin */
+  }
+}
+
+@media all and (max-width: 550px) {
+  #restaurants-list li {
+    width: calc(99% - 60px - 4%);  /* subtract for card padding and margin */
+  }
+
+  .filter-options select {
+    display: block;
+  }
+
+  .filter-options #cuisines-select {
+    margin-left: 0;
+  }
+
+  .filter-options {
+    padding-bottom: 12px;
+  }
+}
