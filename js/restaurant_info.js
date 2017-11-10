@@ -14,6 +14,18 @@ window.initMap = () => {
         center: restaurant.latlng,
         scrollwheel: false
       });
+
+      // remove focus
+      // assuming map doesn't need focus
+      // https://stackoverflow.com/questions/30531075/
+      google.maps.event.addListener(self.map, "tilesloaded", function(){
+        [].slice.apply(document.querySelectorAll('#map a,button')).forEach(function(item) {
+          item.setAttribute('tabindex','-1');
+        });
+        // div for map satellite buttons
+        // button for right side zoom buttons
+      });
+
       fillBreadcrumb();
       DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
     }
