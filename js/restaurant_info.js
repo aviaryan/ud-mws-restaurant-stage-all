@@ -157,6 +157,8 @@ fillBreadcrumb = (restaurant=self.restaurant) => {
   const breadcrumb = document.getElementById('breadcrumb');
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;
+  // https://www.w3.org/TR/wai-aria-practices/examples/breadcrumb/index.html
+  li.setAttribute('aria-current', 'page');
   breadcrumb.appendChild(li);
 }
 
