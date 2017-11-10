@@ -5,51 +5,46 @@
 
 let version = '1.0.0';
 
+let staticCacheName = 'mws-rrs1-' + version;
 
-self.addEventListener('install', e => {
-  // build cache URLs
-  // build helper array
-  let numArr = new Array(10);
-  for (let i = 0; i < 10; i++) {
-    numArr[i] = i+1;
-  }
-  // build paths
-  let images = numArr.map(x => '/img/' + x + '.jpg');
-  let restaurants = numArr.map(x => '/restaurant.html?id=' + x);
-  console.log(images);
-  console.log(restaurants);
-  // main array
-  let cacheURLs = [
-    `/`,
-    `/index.html`,
-    `/css/styles.css`,
-    `/data/restaurants.json`,
-    `/js/dbhelper.js`,
-    `/js/main.js`,
-    `/js/restaurant_info.js`,
-    `/js/load_sw.js`
-  ];
-  Array.prototype.push.apply(cacheURLs, images);
-  Array.prototype.push.apply(cacheURLs, restaurants);
-
-  console.log(cacheURLs);
-
-  // set
-  e.waitUntil(
-    caches.open('mws-rrs1-' + version).then(cache => {
-      return cache.addAll(cacheURLs).then(() => self.skipWaiting());
-    })
-  )
-});
 
 self.addEventListener('activate',  event => {
   event.waitUntil(self.clients.claim());
 });
 
-self.addEventListener('fetch', event => {
+
+/*
+ * Adapted from https://developers.google.com/web/ilt/pwa/lab-caching-files-with-service-worker
+ * Another way to cache is to cache it in 'install' event, but I am not sure if rubrics demands that
+ * It says visited page should show when there is no network access so only caching requests as they happen
+ */
+self.addEventListener('fetch', function(event) {
+  console.log('Fetch event for ', event.request.url);
+
   event.respondWith(
-    caches.match(event.request, {ignoreSearch:true}).then(response => {
-      return response || fetch(event.request);
+    caches.match(event.request).then(function(response) {
+
+      if (response) {
+        console.log('Found ', event.request.url, ' in cache');
+        return response;
+      }
+
+      console.log('Network request for ', event.request.url);
+      return fetch(event.request)
+        .then(function(response) {
+          // TODO 5 - Respond with custom 404 page
+          return caches.open(staticCacheName).then(function(cache) {
+            if (event.request.url.indexOf('maps') < 0) { // don't cache google maps
+              // ^ it's not a site asset, is it?
+              console.log('Saving ' + event.request.url + ' into cache.');
+              cache.put(event.request.url, response.clone());
+            }
+            return response;
+          });
+        });
+
+    }).catch(function(error) {
+      // TODO 6 - Respond with custom offline page
     })
   );
 });
