@@ -216,7 +216,7 @@ nav h1 a {
 }
 .inside #map-container {
   background: blue none repeat scroll 0 0;
-  height: 87%;
+  height: 100%;
   position: fixed;
   right: 0;
   top: 80px;
@@ -227,11 +227,13 @@ nav h1 a {
   height: 100%;
   width: 100%;
 }
+
 .inside #footer {
-  bottom: 0;
-  position: absolute;
-  width: 50%;
+  /*bottom: 0;*/
+  /*position: absolute;*/
+  width: calc(50% - 50px);  /* dunno why 50 */
 }
+
 #restaurant-name {
   color: #f18200;
   font-family: Arial,sans-serif;
@@ -265,7 +267,7 @@ nav h1 a {
   border-bottom: 1px solid #d9d9d9;
   border-top: 1px solid #fff;
   padding: 140px 40px 30px;
-  width: 50%;
+  width: calc(50% - 80px);
 }
 #reviews-container {
   padding: 30px 40px 80px;
