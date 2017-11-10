@@ -1,5 +1,11 @@
 @charset "utf-8";
 /* CSS Document */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
 
 body,td,th,p{
 	font-family: Arial, Helvetica, sans-serif;
@@ -51,13 +57,15 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 /* ====================== Navigation ====================== */
 nav {
   width: 100%;
-  height: 80px;
   background-color: #252831;
   text-align:center;
 }
 nav h1 {
   margin: auto;
+  padding-top: 25px;
+  padding-bottom: 25px;
 }
+
 nav h1 a {
   color: #fff;
   font-size: 14pt;
@@ -104,19 +112,24 @@ nav h1 a {
   background-color: #ccc;
 }
 /* ====================== Restaurant Filtering ====================== */
+
 .filter-options {
-  width: 100%;
-  height: 50px;
+  /*width: auto;*/
+  right: 0;  /* cancels padding extra width */
   background-color: #3397DB;
   align-items: center;
+  padding-top: 16px;
+  padding-left: 32px;
 }
+
 .filter-options h2 {
   color: white;
   font-size: 1rem;
   font-weight: normal;
   line-height: 1;
-  margin: 0 20px;
+  margin: 0;
 }
+
 .filter-options select {
   background-color: white;
   border: 1px solid #fff;
@@ -124,29 +137,41 @@ nav h1 a {
   font-size: 11pt;
   height: 35px;
   letter-spacing: 0;
-  margin: 10px;
+  margin: 10px 0;
   padding: 0 10px;
   width: 200px;
 }
 
+.filter-options #cuisines-select {
+  margin-left: 16px;
+}
+
 /* ====================== Restaurant Listing ====================== */
+
 #restaurants-list {
   background-color: #f3f3f3;
   list-style: outside none none;
   margin: 0;
   padding: 30px 15px 60px;
   text-align: center;
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /*justify-content: space-between;  this can cause issues when n_cards % 3 = 2 */
 }
+
 #restaurants-list li {
   background-color: #fff;
   border: 2px solid #ccc;
   font-family: Arial,sans-serif;
-  margin: 15px;
+  margin: 15px 2%;
   min-height: 380px;
   padding: 0 30px 25px;
   text-align: left;
-  width: 270px;
+  width: calc(33% - 60px - 4%);  /* subtract for card padding and margin */
 }
+
 #restaurants-list .restaurant-img {
   background-color: #ccc;
   display: block;
