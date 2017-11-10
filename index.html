@@ -11,7 +11,7 @@
 <body>
   <header>
     <nav>
-      <h1><a href="/">Restaurant Reviews</a></h1>
+      <h1><a href="/" role="link">Restaurant Reviews</a></h1>
     </nav>
   </header>
 
@@ -22,14 +22,14 @@
     <section>
       <div class="filter-options">
         <h2>Filter Results</h2>
-        <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
+        <select id="neighborhoods-select" name="neighborhoods" role="listbox" onchange="updateRestaurants()">
           <option value="all">All Neighborhoods</option>
         </select>
-        <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()">
+        <select id="cuisines-select" name="cuisines" role="listbox" onchange="updateRestaurants()">
           <option value="all">All Cuisines</option>
         </select>
       </div>
-      <ul id="restaurants-list"></ul>
+      <ul id="restaurants-list" role="list"></ul>
     </section>
   </main>
 
@@ -40,9 +40,11 @@
 
 
   <footer id="footer">
-    Copyright (c) 2017 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
+    Copyright (c) 2017 <a href="/" role="link"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
   </footer>
 
 </body>
+
+<!-- aria https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques -->
 
 </html>
