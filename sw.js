@@ -3,7 +3,7 @@
  inspired from https://github.com/GoogleChromeLabs/airhorn/blob/master/app/sw.js
  */
 
-let version = '1.0.0';
+let version = '1.1.0';
 
 let staticCacheName = 'mws-rrs1-' + version;
 
@@ -48,3 +48,24 @@ self.addEventListener('fetch', function(event) {
     })
   );
 });
+
+
+/* delete old cache */
+self.addEventListener('activate', function(event) {
+  console.log('Activating new service worker...');
+
+  var cacheWhitelist = [staticCacheName];
+
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.map(function(cacheName) {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+});
+
