@@ -228,6 +228,10 @@ nav h1 a {
   width: 100%;
 }
 
+.inside #map div:focus {
+  /* captures all focus on maps */
+}
+
 .inside #footer {
   /*bottom: 0;*/
   /*position: absolute;*/
