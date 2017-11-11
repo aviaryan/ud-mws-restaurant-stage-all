@@ -3,7 +3,7 @@
  inspired from https://github.com/GoogleChromeLabs/airhorn/blob/master/app/sw.js
  */
 
-let version = '1.3.0';
+let version = '1.4.0';
 
 let staticCacheName = 'mws-rrs1-' + version;
 
