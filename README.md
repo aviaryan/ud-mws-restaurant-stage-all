@@ -1,6 +1,6 @@
 # Mobile Web Specialist Certification Course
 
-First, run the stage 2 server from https://github.com/udacity/mws-restaurant-stage-2.
+First, run the stage 3 server from https://github.com/udacity/mws-restaurant-stage-3.
 
 Then, run this project as - 
 
