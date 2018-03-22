@@ -1,6 +1,11 @@
 let restaurant;
 var map;
 
+document.addEventListener('DOMContentLoaded', (event) => {
+  window.lazySizesConfig = window.lazySizesConfig || {};
+  lazySizesConfig.loadMode = 1; // no offscreen images load
+});
+
 /**
  * Initialize Google map, called from HTML.
  */
@@ -68,9 +73,10 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   address.innerHTML = restaurant.address;
 
   const image = document.getElementById('restaurant-img');
-  image.className = 'restaurant-img'
-  image.alt = restaurant.photo_alt;
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.className = 'restaurant-img lazyload';
+  image.alt = 'Photo of ' + restaurant.name;
+  image.setAttribute('data-src', DBHelper.imageUrlForRestaurant(restaurant));
+  image.src = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
