@@ -25,10 +25,10 @@
     <section>
       <div class="filter-options">
         <h2>Filter Results</h2>
-        <select id="neighborhoods-select" name="neighborhoods" role="listbox" onchange="updateRestaurants()">
+        <select id="neighborhoods-select" name="neighborhoods" role="listbox" onchange="updateRestaurants()" aria-label="Neighborhood Selector">
           <option value="all">All Neighborhoods</option>
         </select>
-        <select id="cuisines-select" name="cuisines" role="listbox" onchange="updateRestaurants()">
+        <select id="cuisines-select" name="cuisines" role="listbox" onchange="updateRestaurants()" aria-label="Cuisines Selector">
           <option value="all">All Cuisines</option>
         </select>
       </div>
