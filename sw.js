@@ -41,8 +41,8 @@ self.addEventListener('fetch', function(event) {
         // read
         if (!items.length) {
           // fetch it from net
-          fetch(event.request).then(function (response) {
-            response.json().then(json => {
+          return fetch(event.request).then(function (response) {
+            return response.clone().json().then(json => {
               // add to db
               console.log('event respond fetch from net');
               addAllData(json);
