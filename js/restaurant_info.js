@@ -29,7 +29,7 @@ window.initMap = () => {
         });
         // div for map satellite buttons
         // button for right side zoom buttons
-        document.getElementsByTagName('iframe')[0].setAttribute('title', 'Google Maps');
+        document.getElementsByTagName('iframe')[0].setAttribute('title', 'Google Maps for restaurant');
       });
 
       fillBreadcrumb();
