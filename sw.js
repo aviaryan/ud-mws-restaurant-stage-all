@@ -5,9 +5,9 @@ importScripts('/js/idb.js');
  inspired from https://github.com/GoogleChromeLabs/airhorn/blob/master/app/sw.js
  */
 
-let version = '1.5.0';
-let staticCacheName = 'mws-rrs1-' + version;
-let DBName = 'mws-rrs2';
+let version = '1.6.0';
+let staticCacheName = 'mws-rrs3-' + version;
+let DBName = 'mws-rrs3';
 let DBVersion = 1;
 let dbPromise;
 
