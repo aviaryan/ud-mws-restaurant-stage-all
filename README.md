@@ -5,7 +5,9 @@ First, run the stage 3 server from https://github.com/udacity/mws-restaurant-sta
 Then, run this project as - 
 
 ```sh
-python -m SimpleHTTPServer
+npm install gulp-cli -g
+npm install
+gulp
 ```
 
 
@@ -16,6 +18,7 @@ python -m SimpleHTTPServer
 3. Optimize offscreen images
 4. Added aria labels and fix google maps iframe title
 5. Optimize for PWA by adding a manifest.json.
+6. Gulp asset bundling and minification.
 
 
 ### Past Stages of this project
