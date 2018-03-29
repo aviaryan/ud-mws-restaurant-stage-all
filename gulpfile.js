@@ -5,9 +5,8 @@ const cleanCSS = require('gulp-clean-css');
 const concat = require('gulp-concat');
 const jsmin = require('gulp-jsmin');
 
-const browserSync = require('browser-sync');
 const compress = require('compression');
-const reload = browserSync.reload;
+const connect = require('gulp-connect');
 
 
 const bases = {
@@ -23,9 +22,10 @@ const paths = {
 	},
 	js_all: '**/*.js',
 	js: {
-		static: ['js/dbhelper.js', 'js/lazysizes.min.js', 'js/load_sw.js'],
+		static: ['js/dbhelper.js', 'js/load_sw.js'],
 		main: 'js/main.js',
 		restaurant: 'js/restaurant_info.js',
+		lazySizes: 'js/lazysizes.min.js',
 		sw: 'sw.js',
 		idb: 'js/idb.js'
 	},
@@ -38,14 +38,14 @@ gulp.task('html', function () {
 		.pipe(htmlclean())
 		.pipe(htmlmin({ collapseWhitespace: true }))
 		.pipe(gulp.dest(bases.dist))
-		.pipe(reload({ stream: true }));
+		.pipe(connect.reload());
 });
 
 gulp.task('css', function () {
 	return gulp.src(paths.css, { cwd: bases.src })
 		.pipe(cleanCSS())
 	    .pipe(gulp.dest(bases.dist + 'css/'))
-	    .pipe(reload({ stream: true }));
+	    .pipe(connect.reload());
 });
 
 // https://stackoverflow.com/a/38631463/2295672
@@ -55,7 +55,7 @@ function jsTask(src, name, out_dir){
 		.pipe(gulp.dest(bases.dist + out_dir))
 		.pipe(jsmin())
 		.pipe(gulp.dest(bases.dist + out_dir))
-		.pipe(reload({ stream: true }));
+		.pipe(connect.reload());
 }
 
 gulp.task('js_main', function () {
@@ -63,14 +63,18 @@ gulp.task('js_main', function () {
 });
 
 gulp.task('js_restaurant', function () {
-	return jsTask([...paths.js.static, paths.js.restaurant], 'restauran.js', 'js/');
+	return jsTask([...paths.js.static, paths.js.restaurant], 'restaurant.js', 'js/');
+});
+
+gulp.task('js_lazySizes', function () {
+	return jsTask(paths.js.lazySizes, 'lazysizes.js', 'js/');
 });
 
 gulp.task('sw', function () {
 	return jsTask([paths.js.idb, paths.js.sw], 'sw.js', '');
 });
 
-gulp.task('js', ['js_main', 'js_restaurant', 'sw']);
+gulp.task('js', ['js_main', 'js_restaurant', 'js_lazySizes', 'sw']);
 
 function staticTask(src, out_dir) {
 	return gulp.src(paths.static[src], { cwd: bases.src })
@@ -94,13 +98,15 @@ gulp.task('static', ['images', 'icons', 'manifest']);
 gulp.task('build', ['html', 'css', 'js', 'static']);
 
 gulp.task('serve', ['build'], (() => {
-	browserSync.init({
-		server: {
-			baseDir: bases.dist,
-			middleware: [compress()]
-		}, ui: {
-			port: 8000
-		}, port: 8000
+	connect.server({
+		root: [bases.dist],
+		livereload: false,
+		middleware: function(connect, opt) {
+			return [
+				compress()
+			]
+		},
+		port: 8000
 	});
 }));
 

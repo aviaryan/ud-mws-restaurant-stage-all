@@ -17,11 +17,11 @@
   },
   "homepage": "https://github.com/aviaryan/ud-mws-restaurant-stage-all#readme",
   "devDependencies": {
-    "browser-sync": "^2.23.6",
     "compression": "^1.7.2",
     "gulp": "^3.9.1",
     "gulp-clean-css": "^3.9.3",
     "gulp-concat": "^2.6.1",
+    "gulp-connect": "^5.5.0",
     "gulp-htmlclean": "^2.7.20",
     "gulp-htmlmin": "^4.0.0",
     "gulp-jsmin": "^0.1.5"
