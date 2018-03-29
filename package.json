@@ -1,0 +1,29 @@
+{
+  "name": "mws-restaurant",
+  "version": "3.0.0",
+  "description": "First, run the stage 3 server from https://github.com/udacity/mws-restaurant-stage-3.",
+  "main": "",
+  "scripts": {
+    "start": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aviaryan/ud-mws-restaurant-stage-all.git"
+  },
+  "author": "Avi Aryan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aviaryan/ud-mws-restaurant-stage-all/issues"
+  },
+  "homepage": "https://github.com/aviaryan/ud-mws-restaurant-stage-all#readme",
+  "devDependencies": {
+    "browser-sync": "^2.23.6",
+    "compression": "^1.7.2",
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.9.3",
+    "gulp-concat": "^2.6.1",
+    "gulp-htmlclean": "^2.7.20",
+    "gulp-htmlmin": "^4.0.0",
+    "gulp-jsmin": "^0.1.5"
+  }
+}

@@ -1,4 +1,4 @@
-importScripts('/js/idb.js');
+// importScripts('/js/idb.js');
 
 /*
  Service Worker implementation
