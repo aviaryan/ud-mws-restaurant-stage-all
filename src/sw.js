@@ -29,7 +29,7 @@ self.addEventListener('fetch', function(event) {
   // console.log('Fetch event for ', event.request.url);
 
   // IDB case
-  if (event.request.url.indexOf('localhost:1337') >= 0){
+  if (event.request.url.endsWith('localhost:1337/restaurants')){
     // fetching restaurants, intervene with IDB
     event.respondWith(
       // try to read data

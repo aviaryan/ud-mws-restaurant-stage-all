@@ -163,4 +163,19 @@ class DBHelper {
     return marker;
   }
 
+  static fetchReviewsForRestaurant(id, callback) {
+    fetch('http://localhost:1337/reviews/?restaurant_id=' + id).then(response => {
+      if (response.status === 200) {
+        response.json().then(json => {
+          callback(null, json);
+        }).catch(err => {
+          callback(err, null);
+        });
+      } else {
+        callback(`Request failed. Returned status of ${response.status}`, null);
+      }
+    }).catch(err => {
+      callback(err, null);
+    });
+  }
 }

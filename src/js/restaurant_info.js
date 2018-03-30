@@ -1,4 +1,5 @@
 let restaurant;
+let reviews;
 var map;
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -63,6 +64,25 @@ fetchRestaurantFromURL = (callback) => {
   }
 }
 
+/*
+ * fetch reviews
+ */
+fetchReviews = () => {
+  const id = getParameterByName('id');
+  if (!id) {
+    console.log('No ID in URL');
+    return;
+  }
+  DBHelper.fetchReviewsForRestaurant(id, (err, reviews) => {
+    self.reviews = reviews;
+    if (err || !reviews) {
+      console.log('reviews fetch error', err);
+      return;
+    }
+    fillReviewsHTML();
+  });
+}
+
 /**
  * Create restaurant HTML and add it to the webpage
  */
@@ -87,7 +107,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
     fillRestaurantHoursHTML();
   }
   // fill reviews
-  fillReviewsHTML();
+  fetchReviews();
 }
 
 /**
@@ -113,7 +133,7 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
 /**
  * Create all reviews HTML and add them to the webpage.
  */
-fillReviewsHTML = (reviews = self.restaurant.reviews) => {
+fillReviewsHTML = (reviews = self.reviews) => {
   const container = document.getElementById('reviews-container');
   const title = document.createElement('h3');
   title.innerHTML = 'Reviews';
@@ -143,7 +163,7 @@ createReviewHTML = (review) => {
   li.appendChild(name);
 
   const date = document.createElement('p');
-  date.innerHTML = review.date;
+  date.innerHTML = getHumanDate(review.createdAt);
   li.appendChild(date);
 
   const rating = document.createElement('p');
@@ -183,4 +203,10 @@ getParameterByName = (name, url) => {
   if (!results[2])
     return '';
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+
+getHumanDate = (ts) => {
+  let date = new Date(ts);
+  return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 }
