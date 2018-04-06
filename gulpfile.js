@@ -81,6 +81,7 @@ function staticTask(src, out_dir) {
 		.pipe(gulp.dest(bases.dist + out_dir));
 }
 
+// images are already very optimized
 gulp.task('images', function() {
 	return staticTask('images', 'img/');
 });
