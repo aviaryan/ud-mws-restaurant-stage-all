@@ -318,12 +318,12 @@ nav h1 a {
   max-width: 400px;
 }
 
-#review-form input,textarea,select {
+#name, #comment, #rating {
   display: block;
   margin-top: 8px;
 }
 
-#review-form #name, #comment {
+#name, #comment {
   width: 270px;
 }
 
