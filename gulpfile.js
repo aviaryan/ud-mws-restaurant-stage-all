@@ -63,7 +63,7 @@ gulp.task('js_main', function () {
 });
 
 gulp.task('js_restaurant', function () {
-	return jsTask([...paths.js.static, paths.js.restaurant], 'restaurant.js', 'js/');
+	return jsTask([...paths.js.static, paths.js.idb, paths.js.restaurant], 'restaurant.js', 'js/');
 });
 
 gulp.task('js_lazySizes', function () {

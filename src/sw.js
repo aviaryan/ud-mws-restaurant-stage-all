@@ -146,3 +146,53 @@ function addAllData(rlist) {
     return false;
   });
 }
+
+
+// reviews
+// https://developers.google.com/web/updates/2015/12/background-sync
+
+self.addEventListener('sync', function (event) {
+  if (event.tag === 'sync') {
+    event.waitUntil(
+      sendReviews().then(() => {
+        console.log('synced');
+      }).catch(err => {
+        console.log(err, 'error syncing');
+      })
+    );
+  }
+});
+
+function sendReviews() {
+  return idb.open('review', 1).then(db => {
+    let tx = db.transaction('outbox', 'readonly');
+    return tx.objectStore('outbox').getAll();
+  }).then(reviews => {
+    return Promise.all(reviews.map(review => {
+      let reviewID = review.id;
+      delete review.id;
+      console.log("sending review", review);
+      // POST review
+      return fetch('http://localhost:1337/reviews', {
+        method: 'POST',
+        body: JSON.stringify(review),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      }).then(response => {
+        console.log(response);
+        return response.json();
+      }).then(data => {
+        console.log('added review', data);
+        if (data) {
+          // delete from db
+          idb.open('review', 1).then(db => {
+            let tx = db.transaction('outbox', 'readwrite');
+            return tx.objectStore('outbox').delete(reviewID);
+          });
+        }
+      });
+    }));
+  });
+}

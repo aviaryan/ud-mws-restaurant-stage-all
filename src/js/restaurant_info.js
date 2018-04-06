@@ -210,3 +210,35 @@ getHumanDate = (ts) => {
   let date = new Date(ts);
   return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 }
+
+/* Managing reviews */
+// https://developers.google.com/web/updates/2015/12/background-sync
+navigator.serviceWorker.ready.then(function (swRegistration) {
+  let form = document.querySelector('#review-form');
+  // listen to submit event
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    let rating = form.querySelector('#rating');
+    let review = {
+      restaurant_id: getParameterByName('id'),
+      name: form.querySelector('#name').value,
+      rating: rating.options[rating.selectedIndex].value,
+      comments: form.querySelector('#comment').value
+    };
+    console.log(review);
+    // save to DB
+    idb.open('review', 1, function (upgradeDb) {
+      upgradeDb.createObjectStore('outbox', { autoIncrement: true, keyPath: 'id' });
+    }).then(function (db) {
+      var transaction = db.transaction('outbox', 'readwrite');
+      return transaction.objectStore('outbox').put(review);
+    }).then(function () {
+      form.reset();
+      // register for sync and clean up the form
+      return swRegistration.sync.register('sync').then(() => {
+        console.log('Sync registered');
+      });
+    });
+    // finish
+  });
+});
