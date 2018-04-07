@@ -58,8 +58,8 @@
       <section id="new-review">
         <h3 tabindex="0">Add Your Review</h3>
         <form action="" id="review-form">
-          <input type="text" placeholder="Name" id="name">
-          <select name="rating" id="rating">
+          <input type="text" placeholder="Name" id="name" aria-label="Review Author Name">
+          <select name="rating" id="rating" aria-label="Rating">
             <option value="none" disabled selected>Rating</option>
             <option value="1">1</option>
             <option value="2">2</option>
@@ -67,7 +67,7 @@
             <option value="4">4</option>
             <option value="5">5</option>
           </select>
-          <textarea name="comment" id="comment" cols="30" rows="10" placeholder="Your review goes here... "></textarea>
+          <textarea name="comment" id="comment" cols="30" rows="10" placeholder="Your review goes here... " aria-label="Review"></textarea>
           <input id="submit" type="submit">
         </form>
       </section>
