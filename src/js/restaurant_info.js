@@ -253,7 +253,7 @@ navigator.serviceWorker.ready.then(function (swRegistration) {
       // register for sync and clean up the form
       return swRegistration.sync.register('sync').then(() => {
         console.log('Sync registered');
-        // add review to view
+        // add review to view (for better UX)
         // const ul = document.getElementById('reviews-list');
         // review.createdAt = new Date();
         // ul.appendChild(createReviewHTML(review));
