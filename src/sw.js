@@ -160,8 +160,45 @@ self.addEventListener('sync', function (event) {
         console.log(err, 'error syncing');
       })
     );
+  } else if (event.tag === 'favorite') {
+    event.waitUntil(
+      sendFavorites().then(() => {
+        console.log('favorites synced');
+      }).catch(err => {
+        console.log(err, 'error syncing favorites');
+      })
+    );
   }
 });
+
+function sendFavorites() {
+  return idb.open('favorite', 1).then(db => {
+    let tx = db.transaction('outbox', 'readonly');
+    return tx.objectStore('outbox').getAll();
+  }).then(items => {
+    return Promise.all(items.map(item => {
+      let id = item.id;
+      // delete review.id;
+      console.log("sending favorite", item);
+      // POST review
+      return fetch(`http://localhost:1337/restaurants/${item.resId}/?is_favorite=${item.favorite}`, {
+        method: 'PUT'
+      }).then(response => {
+        console.log(response);
+        return response.json();
+      }).then(data => {
+        console.log('added favorite', data);
+        if (data) {
+          // delete from db
+          idb.open('favorite', 1).then(db => {
+            let tx = db.transaction('outbox', 'readwrite');
+            return tx.objectStore('outbox').delete(id);
+          });
+        }
+      });
+    }));
+  });
+}
 
 function sendReviews() {
   return idb.open('review', 1).then(db => {

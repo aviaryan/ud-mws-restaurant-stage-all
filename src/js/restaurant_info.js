@@ -83,12 +83,28 @@ fetchReviews = () => {
   });
 }
 
+/*
+ * set favorite button
+ */
+setFavoriteButton = (status) => {
+  const favorite = document.getElementById('favBtn');
+  if (status === 'true') {
+    favorite.title = 'Restaurant is Favorite';
+    favorite.innerHTML = '⭐️ Unfavorite';
+  } else {
+    favorite.title = 'Restaurant is not Favorite';
+    favorite.innerHTML = '☆ Favorite';
+  }
+}
+
 /**
  * Create restaurant HTML and add it to the webpage
  */
 fillRestaurantHTML = (restaurant = self.restaurant) => {
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
+  // favorite
+  setFavoriteButton(restaurant.is_favorite);
 
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
@@ -237,6 +253,38 @@ navigator.serviceWorker.ready.then(function (swRegistration) {
       // register for sync and clean up the form
       return swRegistration.sync.register('sync').then(() => {
         console.log('Sync registered');
+      });
+    });
+    // finish
+  });
+});
+
+
+/* Managing favorites */
+navigator.serviceWorker.ready.then(function (swRegistration) {
+  console.log('ran fav');
+  let btn = document.getElementById('favBtn');
+  console.log('btn', btn);
+  // listen to click event
+  btn.addEventListener('click', e => {
+    const opposite = (self.restaurant.is_favorite === 'true') ? 'false' : 'true';
+    console.log('clicked');
+    let res = {
+      resId: getParameterByName('id'),
+      favorite: opposite
+    };
+    // save to DB
+    idb.open('favorite', 1, function (upgradeDb) {
+      upgradeDb.createObjectStore('outbox', { autoIncrement: true, keyPath: 'id' });
+    }).then(function (db) {
+      var transaction = db.transaction('outbox', 'readwrite');
+      return transaction.objectStore('outbox').put(res);
+    }).then(function () {
+      setFavoriteButton(opposite);
+      self.restaurant.is_favorite = opposite;
+      // register for sync and clean up the form
+      return swRegistration.sync.register('favorite').then(() => {
+        console.log('Favorite Sync registered');
       });
     });
     // finish
