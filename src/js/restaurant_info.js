@@ -253,6 +253,10 @@ navigator.serviceWorker.ready.then(function (swRegistration) {
       // register for sync and clean up the form
       return swRegistration.sync.register('sync').then(() => {
         console.log('Sync registered');
+        // add review to view
+        // const ul = document.getElementById('reviews-list');
+        // review.createdAt = new Date();
+        // ul.appendChild(createReviewHTML(review));
       });
     });
     // finish
@@ -262,9 +266,7 @@ navigator.serviceWorker.ready.then(function (swRegistration) {
 
 /* Managing favorites */
 navigator.serviceWorker.ready.then(function (swRegistration) {
-  console.log('ran fav');
   let btn = document.getElementById('favBtn');
-  console.log('btn', btn);
   // listen to click event
   btn.addEventListener('click', e => {
     const opposite = (self.restaurant.is_favorite === 'true') ? 'false' : 'true';
